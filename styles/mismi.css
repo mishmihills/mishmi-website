@@ -1,0 +1,33 @@
+.bg-light {
+    background-color: #F4F2E9 !important;
+  }
+  .text-dark {
+    color: #3C3C3C !important;
+  }
+  .font-sans {
+    font-family: sans-serif;
+  }
+  .text-success {
+	color: #2E5339 !important;
+  }
+  
+  .hover-text-success:hover {
+	color: #2E5339 !important;
+  }
+  
+  .bg-light {
+	background-color: #F4F2E9 !important;
+  }
+  
+  .btn-warning {
+	background-color: #D88C5C !important;
+	border-color: #D88C5C !important;
+  }
+  
+  .btn-warning:hover {
+	background-color: #C47B4D !important;
+	border-color: #C47B4D !important;
+  }
+  .hover-text-warning:hover {
+	color: #D88C5C !important;
+  }
