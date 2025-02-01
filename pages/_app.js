@@ -32,7 +32,8 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <GoogleReCaptchaProvider
-      reCaptchaKey={process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY}
+      // reCaptchaKey={process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY}
+      reCaptchaKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
       scriptProps={{
         async: false,
         defer: false,
