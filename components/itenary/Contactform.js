@@ -71,29 +71,7 @@ message += "<p>" + `Source: ` + "<a href='" + hostname + "/" + router.asPath + "
 
 return message;
 }
-const getcrmData=(submitData)=>{
-let hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : '';
-let da = {
-           FirstName:submitData.firstName,
-           LastName:submitData.lastName,
-           Phone:submitData.contact,
-           EmailAddress:submitData.email,
-           Source:'website',
-           Notes:submitData.nameite + ` Source: ` + "<a href='" + hostname + "/" + router.asPath + "' target='_new'>" + router.asPath + "</a>",
-           mx_Preferable_Date_of_Travelling:submitData.travelSdate,
-           mx_Destination:submitData.destination,
-           mx_Number_of_Travellers:submitData.traveller,
-           ProspectStage:'New Lead'
-        }
-let pt = Object.keys(da).map((as)=>{
-return ({Attribute:as,Value:da[as]});
 
-})
-
-
-
-return pt;
-}
 
 const ValidateEmail=(input)=>{
   let validRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -229,8 +207,9 @@ if(mailresponse){
 }else{
     console.log('Mail server error');  
 }
-
+if(process.env.NEXT_PUBLIC_GOOGLETAGMANAGER && process.env.NEXT_PUBLIC_GOOGLETAGMANAGER !== ''){
 Tagmanageri([{pagename:ipagename,custom_itinerary:true}],'itinerary_request');
+}
 setBloading(false);
 setSubmitData({nameite:'',travelSdate:"",travelEdate:"",traveller:"",destination:"",firstName:"",lastName:"",contact:"",email:""});
 }else{
@@ -238,6 +217,16 @@ setSuccesspage('');
 setBloading(false);
 }
 setFinalsubmit(false);
+
+}
+
+const submitHandler = (e) => {
+  if (process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY && process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY !== '') {
+    handleSumitForm(e);
+  } else {
+    e.preventDefault();
+    submitAll(submitData);
+  }
 
 }
 
@@ -254,7 +243,7 @@ return (
         <div className="sidebar__total__price mb-3">
                 <h4>Customization Fee: <span style={{color:'green'}}>₹  149/-</span></h4>  
             </div>
-          <form onSubmit={handleSumitForm}>
+          <form onSubmit={submitHandler}>
          
             <div className="sidebar__select__wrap">
                 <div className="sidebar__select__single">

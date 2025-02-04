@@ -7,7 +7,7 @@ import Itenarydetails from "./Itenarydetails";
 
 const TripDetails = (props) => {
     const router = useRouter()
-    const { AOS, toggle, setToggle, togglesx, setTogglesx, description, totalcf, totalpricetag, tripdetails, isgrouptrip, data, setSelectedGrouptrip, itenaryobj, setAddonData, addonData, base_url , showModal, setShowModal , setIsenquried , isenquried} = props;
+    const { AOS, toggle, setToggle, togglesx, setTogglesx, description, totalcf, totalpricetag, tripdetails, isgrouptrip, data, setSelectedGrouptrip, itenaryobj, setAddonData, addonData, base_url , showModal, setShowModal , setIsenquried , isenquried , setToggles , toggleen , setToggleen } = props;
 
     const [isLess, setIsLess] = useState(true);
 
@@ -234,7 +234,7 @@ const TripDetails = (props) => {
                                         <h5>Need help customising  this itenerary ? </h5>
                                         <p>Our travel experts can help you choose the best hotels, and transportation options to get you to your desired destinations.They are knowledgeable about the best destinations,attractions,and activities to include in your customized itinerary.</p>
                                         <div className="sitebar__btn__blk">
-                                            <div id="itineary_customize" className="common__btn sidebar-open" style={{ width: '100%', cursor: 'pointer', backgroundColor: '#FBCC04' }} onClick={() => setToggle(true)}>Request Custom Itinerary</div>
+                                            <div id="itineary_customize" className="common__btn sidebar-open" style={{ width: '100%', cursor: 'pointer', backgroundColor: '#FBCC04' }} onClick={() => setToggleen(true)}>Request Custom Itinerary</div>
                                         </div>
                                     </div>
                                 </div>

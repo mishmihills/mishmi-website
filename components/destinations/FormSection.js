@@ -157,7 +157,9 @@ if(mailresponse){
 }else{
     console.log('Mail server error');  
 }
+if(process.env.NEXT_PUBLIC_GOOGLETAGMANAGER && process.env.NEXT_PUBLIC_GOOGLETAGMANAGER !== ''){
 Tagmanageri([{pagename:'destination'}],'destination_request');
+}
 
 setBloading(false);
 setSubmitData({nameite:'',travelSdate:"",travelEdate:"",traveller:"",destination:"",firstName:"",lastName:"",contact:"",email:""});
@@ -169,6 +171,15 @@ setFinalsubmit(false);
 
 }
 
+const submitHandler = (e) => {
+  if (process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY && process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY !== '') {
+    handleSumitForm(e);
+  } else {
+    e.preventDefault();
+    submitAll(submitData);
+  }
+
+}
 
 
 return ( 
@@ -188,7 +199,7 @@ return (
                 </div>
                 <div className="col-xl-5 col-lg-6">
                     <div className="destination__area">
-                        <form onSubmit={handleSumitForm}>
+                        <form onSubmit={submitHandler}>
                             <div className="single__input__box">
                                 <label htmlFor="#">Name</label>
                                  <input  name="name" className={error && error.name ? "error" : "dff"} id="name" type="text" onChange={(e)=>onChangeHandler(e)} value={submitData.name || ''}/>

@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
   }, [router.pathname]);
 
   return (
-    <GoogleReCaptchaProvider
+  /*   <GoogleReCaptchaProvider
       reCaptchaKey={process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY}
       scriptProps={{
         async: false,
@@ -39,13 +39,15 @@ function MyApp({ Component, pageProps }) {
         appendTo: "head",
         nonce: undefined,
       }}
-    >
+    > */
+    <>
       {isLoading ? (
         <Loader /> // Show loader while the CSS is loading
       ) : (
         <Component {...pageProps} />
       )}
-    </GoogleReCaptchaProvider>
+    </>
+   /*  </GoogleReCaptchaProvider> */
   );
 }
 

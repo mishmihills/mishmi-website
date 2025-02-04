@@ -380,7 +380,7 @@ var options = {
                                                     }));
   
 
-if(localresponse.data !== 400){
+if(localresponse.data.success){
       // Validate payment at serverv - using webhooks is a better idea.
  setPaymentdetails({
                     payment_id:response.razorpay_payment_id,
@@ -403,7 +403,9 @@ if(localresponse.data !== 400){
     let uniqueid = localStorage.getItem('cartid');
     localStorage.removeItem(uniqueid);
    setSalert({...salert,success:"Payment transaction has been success",fail:""});
+   if(process.env.NEXT_PUBLIC_GOOGLETAGMANAGER && process.env.NEXT_PUBLIC_GOOGLETAGMANAGER !== ''){
    Tagmanageri([{pagename:'accommodation',order_value:(data.amount)/100 || 0}],'new_booking'); 
+   }
    }else{
     setSalert({...salert,fail:"Payment transaction has been Failed"});
       setBloading(false);
@@ -439,7 +441,9 @@ if(localresponse.data !== 400){
 }
 
 useEffect(() => {
+  if(process.env.NEXT_PUBLIC_GOOGLETAGMANAGER && process.env.NEXT_PUBLIC_GOOGLETAGMANAGER !== "") {
     Tagmanageri();
+}
   }, []);
 
 

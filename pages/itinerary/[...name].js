@@ -35,6 +35,7 @@ const Itenary = ({ data, base_url, ItenId, carbonRegisteraccess, clientId }) => 
   const [defaultpeople, setDefaultpeople] = useState(2);
   const [toggle, setToggle] = useState(false);
   const [toggles, setToggles] = useState(false);
+  const [toggleen, setToggleen] = useState(false);
   const [togglesx, setTogglesx] = useState(false);
   const [salert, setSalert] = useState({ sucess: '', fail: '' });
   const [paymentdetails, setPaymentdetails] = useState('');
@@ -66,7 +67,9 @@ const Itenary = ({ data, base_url, ItenId, carbonRegisteraccess, clientId }) => 
       document.head.appendChild(script);
     }
 
+if(process.env.NEXT_PUBLIC_GOOGLETAGMANAGER && process.env.NEXT_PUBLIC_GOOGLETAGMANAGER !== "") {
     Tagmanageri();
+}
   }, []);
 
   useEffect(() => {
@@ -337,10 +340,10 @@ const Itenary = ({ data, base_url, ItenId, carbonRegisteraccess, clientId }) => 
                   {showModal && <ShortEnquiry showModal={showModal} setShowModal={setShowModal} idx={ItenId} setIsenquried={setIsenquried} sendMail={sendMail} />}
                   <EnquiryComponents toggle={toggles} setToggle={setToggles} />
                   <Sidebar clientId={clientId} listofprojects={listofprojects} callCarbonSalesRegister={callCarbonSalesRegister} ipagename={ipagename} initializeRazorpay={initializeRazorpay} getCalculates={getCalculates} grandTotalcart={grandTotalcart} calculationdataxc={calculationdataxc} defaultpeople={defaultpeople} agencycomission={agencycomission} setAgencycomission={setAgencycomission} data={[virtualObj]} bloading={bloading} setBloading={setBloading} AOS={AOS} base_url={base_url} setToggle={setToggle} toggle={toggle} itenaryduration={getItenaryduration(virtualObj)} salert={salert} setSalert={setSalert} Tagmanageri={Tagmanageri} setPaymentdetails={setPaymentdetails} locationdetails={allaccomodation}  selectedGrouptrip={selectedGrouptrip} setSelectedGrouptrip={setSelectedGrouptrip} totaladdonprice={totaladdonprice}  appliedCoupon={appliedCoupon}  setAppliedCoupon={setAppliedCoupon} />
-                  {toggles ? <Contactform ipagename={ipagename} AOS={AOS} Tagmanageri={Tagmanageri} toggle={toggles} setToggle={setToggles} nameite={nameite} successpage={successpage} setSuccesspage={setSuccesspage} sendMail={sendMail} /> : ''}
+                  {toggleen ? <Contactform ipagename={ipagename} AOS={AOS} Tagmanageri={Tagmanageri} toggle={toggleen} setToggle={setToggleen} nameite={nameite} successpage={successpage} setSuccesspage={setSuccesspage} sendMail={sendMail} /> : ''}
                   {togglesx ? <ContactformEn ipagename={ipagename} AOS={AOS} Tagmanageri={Tagmanageri} toggle={togglesx} setToggle={setTogglesx} nameite={nameite} successpage={successpage} setSuccesspage={setSuccesspage} sendMail={sendMail} /> : ''}
                   <SliderSection AOS={AOS} images={images} base_url={base_url} nameite={nameite} itenaryduration={getItenaryduration(virtualObj)} totalcf={getCarbonCF(virtualObj)} totalprice={virtualObj} />
-                  <TripDetails isenquried={isenquried} setIsenquried={setIsenquried} showModal={showModal} setShowModal={setShowModal} isgrouptrip={isgrouptrip} AOS={AOS} base_url={base_url} setToggle={setToggle} toggle={toggle} description={description} totalcf={getCarbonCF(virtualObj)} nameite={nameite} tripdetails={tripdetails} totalpricetag={priceTag} locationdetails={allaccomodation} data={[virtualObj]} setTogglesx={setTogglesx} togglesx={togglesx} setSelectedGrouptrip={setSelectedGrouptrip} itenaryobj={[virtualObj]} setAddonData={setAddonData} addonData={addonData} />
+                  <TripDetails isenquried={isenquried} setIsenquried={setIsenquried} showModal={showModal} setShowModal={setShowModal} isgrouptrip={isgrouptrip} AOS={AOS} base_url={base_url} setToggle={setToggle} toggle={toggle} description={description} totalcf={getCarbonCF(virtualObj)} nameite={nameite} tripdetails={tripdetails} totalpricetag={priceTag} locationdetails={allaccomodation} data={[virtualObj]} setTogglesx={setTogglesx} togglesx={togglesx} setSelectedGrouptrip={setSelectedGrouptrip} itenaryobj={[virtualObj]} setAddonData={setAddonData} addonData={addonData} toggleen={toggleen} setToggleen={setToggleen} />
                   {constdata && constdata.length > 0 ? <InformationArea AOS={AOS} constant={constdata} /> : ""}
                   {faqdata && <Faq faqdata={faqdata} />}
                   <PrintArea AOS={AOS} />

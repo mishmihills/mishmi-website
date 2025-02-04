@@ -1,293 +1,256 @@
-import {useState,useEffect,memo ,useCallback} from "react";
-import {DataSubmittedtoapi} from '../../function/enquiry';
+import { useState, useEffect, memo, useCallback } from "react";
+import { DataSubmittedtoapi } from '../../function/enquiry';
 import { useRouter } from 'next/router';
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 
 
-const ContactformEn=(props)=>{
+const ContactformEn = (props) => {
 
-const {ipagename,AOS,toggle,setToggle,nameite,successpage,setSuccesspage,sendMail,Tagmanageri} = props;
-const [error,setError] = useState({travelSdate:"",travelEdate:"",traveller:"",destination:"",firstName:"",lastName:"",contact:"",email:""});
-const [submitData,setSubmitData] = useState({nameite:nameite,travelSdate:"",travelEdate:"",traveller:"",destination:"",firstName:"",lastName:"",contact:"",email:""});
-const [bloading,setBloading] = useState(false);
-const router = useRouter();
-const { executeRecaptcha } = useGoogleReCaptcha();
-const [notification,setNotification] = useState('');
-const [finalsubmit,setFinalsubmit] = useState(false);
+  const { ipagename, AOS, toggle, setToggle, nameite, successpage, setSuccesspage, sendMail, Tagmanageri } = props;
+  const [error, setError] = useState({ travelSdate: "", travelEdate: "", traveller: "", destination: "", firstName: "", lastName: "", contact: "", email: "" });
+  const [submitData, setSubmitData] = useState({ nameite: nameite, travelSdate: "", travelEdate: "", traveller: "", destination: "", firstName: "", lastName: "", contact: "", email: "" });
+  const [bloading, setBloading] = useState(false);
+  const router = useRouter();
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const [notification, setNotification] = useState('');
+  const [finalsubmit, setFinalsubmit] = useState(false);
 
 
-useEffect(() => {
+  useEffect(() => {
     AOS.init({
-        disable: 'mobile'
+      disable: 'mobile'
     });
     AOS.refresh();
 
   }, [AOS]);
-const todate=()=>{
-let today = new Date();
 
-let dd = today.getDate();
-let mm = today.getMonth() + 1; //January is 0!
-let yyyy = today.getFullYear();
-today = yyyy + '-' + mm + '-' + dd;
-return today;
+  const onChangeHandler = (e) => {
+    if (e.target.name === 'traveller' && e.target.value > 0) {
+      setSubmitData({ ...submitData, [e.target.name]: e.target.value });
+    }
+    if (e.target.name !== 'traveller') {
+      setSubmitData({ ...submitData, [e.target.name]: e.target.value });
+    }
 
-}
-const onChangeHandler=(e)=>{
-if(e.target.name === 'traveller' && e.target.value > 0){
-setSubmitData({...submitData,[e.target.name]:e.target.value});	
-}
-if(e.target.name !== 'traveller'){
-setSubmitData({...submitData,[e.target.name]:e.target.value});	
-}
-
-
-}
-
-const onChangeHandlerDate=(e)=>{
-let xcc = {...submitData};
-let ds = new Date().getTime();
-if(e.target.name === 'travelSdate' && new Date(e.target.value).getTime() > ds){
-xcc = {...xcc,[e.target.name]:e.target.value}
-}
-if(e.target.name === 'travelEdate' && new Date(e.target.value).getTime() > ds){
-xcc = {...xcc,[e.target.name]:e.target.value}
-}
-
-setSubmitData(xcc);
-}
-
-const composeMessage=(data)=>{
-let hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : '';
-let message = `${data.firstName} ${data.lastName} , ${data.message}.`;
-message += "<div>" + `Mobile Number: ${data.contact}` + "</div>";
-message += "<div>" + `Email: ${data.email}`  + "</div>";
-if(data.travelSdate){
-message += "<div>" + `Travel Dates: Start Date: ${data.travelSdate} - End Date: ${data.travelEdate}`  + "</div>";    
-}
-if(data.destination){
-message += "<div>" + `Destination: ${data.destination}`  + "</div>";
-}
-if(data.traveller){
-message += "<div>" + `Number of Traveller: ${data.traveller}`  + "</div>";
-}
-if(data.message){
-message += "<div>" + `Customer Message: ${data.message}`  + "</div>";
-}
-
-message += "<p>" + `Source: ` + "<a href='" + hostname + "/" + router.asPath + "' target='_new'>" + router.asPath + "</a>" + "</p>";
-
-return message;
-}
-const getcrmData=(submitData)=>{
-let hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : '';
-let da = {
-           FirstName:submitData.firstName,
-           LastName:submitData.lastName,
-           Phone:submitData.contact,
-           EmailAddress:submitData.email,
-           Source:'website',
-           Notes:submitData.message + ` Source: ` + "<a href='" + hostname + "/" + router.asPath + "' target='_new'>" + router.asPath + "</a>",
-           ProspectStage:'New Lead'
-        }
-let pt = Object.keys(da).map((as)=>{
-return ({Attribute:as,Value:da[as]});
-
-})
-
-
-
-return pt;
-}
-
-const ValidateEmail=(input)=>{
-  let validRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-  if (input.match(validRegex)) {
-
-    return true;
-
-  } else {
-
-    return false;
 
   }
 
-}
+
+  const composeMessage = (data) => {
+    let hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : '';
+    let message = `${data.firstName} ${data.lastName} , ${data.message}.`;
+    message += "<div>" + `Mobile Number: ${data.contact}` + "</div>";
+    message += "<div>" + `Email: ${data.email}` + "</div>";
+    if (data.travelSdate) {
+      message += "<div>" + `Travel Dates: Start Date: ${data.travelSdate} - End Date: ${data.travelEdate}` + "</div>";
+    }
+    if (data.destination) {
+      message += "<div>" + `Destination: ${data.destination}` + "</div>";
+    }
+    if (data.traveller) {
+      message += "<div>" + `Number of Traveller: ${data.traveller}` + "</div>";
+    }
+    if (data.message) {
+      message += "<div>" + `Customer Message: ${data.message}` + "</div>";
+    }
+
+    message += "<p>" + `Source: ` + "<a href='" + hostname + "/" + router.asPath + "' target='_new'>" + router.asPath + "</a>" + "</p>";
+
+    return message;
+  }
 
 
-const handleSumitForm = useCallback(
-  (e) => {
-    e.preventDefault();
-    if (!executeRecaptcha) {
-      console.log("Execute recaptcha not yet available");
+  const ValidateEmail = (input) => {
+    let validRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (input.match(validRegex)) {
+
+      return true;
+
+    } else {
+
+      return false;
+
+    }
+
+  }
+
+
+  const handleSumitForm = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!executeRecaptcha) {
+        console.log("Execute recaptcha not yet available");
+        return;
+      }
+      executeRecaptcha("enquiryFormSubmit").then((gReCaptchaToken) => {
+        submitEnquiryForm(gReCaptchaToken);
+      });
+    },
+    [executeRecaptcha]
+  );
+  const submitEnquiryForm = (gReCaptchaToken) => {
+    fetch("/api/verify-recaptcha", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        recaptchaToken: gReCaptchaToken,
+      }),
+    })
+      .then((res) => res.json())
+      .then((resx) => {
+        console.log(resx.status);
+        if (resx.status && resx.status === "success") {
+          setFinalsubmit(true);
+          setNotification(resx.message);
+        } else {
+          setNotification(resx.message);
+        }
+      });
+
+  }
+  useEffect(() => {
+    if (finalsubmit === true) {
+      console.log(submitData);
+      submitAll(submitData);
+    }
+
+  }, [finalsubmit])
+
+  const submitAll = async (submitData) => {
+
+    let exc = { ...error };
+
+    if (submitData.firstName === "") {
+      exc.firstName = "Firstname required";
+    } else {
+      exc.firstName = "";
+    }
+    if (submitData.lastName === "") {
+      exc.lastName = "Lastname required";
+    } else {
+      exc.lastName = "";
+    }
+    if (submitData.contact === "" || submitData.contact.length > 10) {
+      exc.contact = "Mobile required";
+    } else {
+      exc.contact = "";
+    }
+    if (submitData.email === "" || !ValidateEmail(submitData.email)) {
+      exc.email = "Email required";
+    } else {
+      exc.email = "";
+    }
+    if (submitData.message === "") {
+      exc.message = "Message required";
+    } else {
+      exc.message = "";
+    }
+
+    setError(exc);
+
+    let dfd = Object.values(exc);
+    let erc = false;
+    dfd.map((as) => {
+      if (as === "") {
+        erc = true;
+        return;
+      }
+    })
+
+    if (erc === false || !erc) {
       return;
     }
-    executeRecaptcha("enquiryFormSubmit").then((gReCaptchaToken) => {
-      submitEnquiryForm(gReCaptchaToken);
-    });
-  },
-  [executeRecaptcha]
-);
-const submitEnquiryForm = (gReCaptchaToken) => {
-  fetch("/api/verify-recaptcha", {
-    method: "POST",
-    headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      recaptchaToken: gReCaptchaToken,
-    }),
-  })
-    .then((res) => res.json())
-      .then((resx) => {
-      console.log(resx.status);
-      if (resx.status && resx.status === "success") {
-        setFinalsubmit(true);
-        setNotification(resx.message);
+    setBloading(true);
+
+
+    const message = composeMessage(submitData);
+    const uploaddata = { name: `${submitData.firstName} ${submitData.lastName}`, email: submitData.email, phone: submitData.contact, message: message, tag: 'Enquiry', info: submitData };
+    let dataSubmitted = await DataSubmittedtoapi(uploaddata);
+
+    if (dataSubmitted && dataSubmitted.success === true) {
+      setSuccesspage(uploaddata);
+
+      let maildata = { subject: 'Enquiry', text: message };
+      let mailresponse = await sendMail(maildata);
+      if (mailresponse) {
+        console.log('Mail has been sent');
       } else {
-        setNotification(resx.message);
+        console.log('Mail server error');
       }
-    });
-
+      if(process.env.NEXT_PUBLIC_GOOGLETAGMANAGER && process.env.NEXT_PUBLIC_GOOGLETAGMANAGER !== ''){
+      Tagmanageri([{ pagename: ipagename, custom_itinerary: false }], 'itinerary_request');
+      }
+      setBloading(false);
+      setSubmitData({ firstName: "", lastName: "", contact: "", email: "", message: '' });
+    } else {
+      setSuccesspage('');
+      setBloading(false);
     }
-useEffect(()=>{
-if(finalsubmit === true){
-console.log(submitData);
-submitAll(submitData);  
-}
+    setFinalsubmit(false);
 
-},[finalsubmit])
+  }
 
-const submitAll=async(submitData)=>{
-
-	let exc = {...error};
-
-	if(submitData.firstName === ""){
-    exc.firstName = "Firstname required";
-	}else{
-	exc.firstName = "";	
-	}
-	if(submitData.lastName === ""){
-    exc.lastName = "Lastname required";
-	}else{
-	exc.lastName = "";	
-	}
-	if(submitData.contact === "" || submitData.contact.length > 10){
-    exc.contact = "Mobile required";
-	}else{
-	exc.contact = "";	
-	}
-	if(submitData.email === "" || !ValidateEmail(submitData.email)){
-    exc.email = "Email required";
-	}else{
-	exc.email = "";	
-	}
-    if(submitData.message === ""){
-    exc.message = "Message required";
-    }else{
-    exc.message = "";  
+  const submitHandler = (e) => {
+    if (process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY && process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY !== '') {
+      handleSumitForm(e);
+    } else {
+      e.preventDefault();
+      submitAll(submitData);
     }
 
-setError(exc);
-
-let dfd = Object.values(exc);
-let erc = false;
-dfd.map((as)=>{
-	if(as === ""){
-		erc = true;
-		return;
-	}
-})
-
-if(erc === false || !erc){
-    return;
-}
-setBloading(true);
+  }
 
 
-const message = composeMessage(submitData);
-const uploaddata = {name:`${submitData.firstName} ${submitData.lastName}`,email:submitData.email,phone:submitData.contact,message:message,tag:'Enquiry',info:submitData};
-let dataSubmitted = await DataSubmittedtoapi(uploaddata);
-
-if(dataSubmitted && dataSubmitted.success === true){
-setSuccesspage(uploaddata);
-
-/*let crmuploaddata = getcrmData(submitData);
-try{
-    let res = await crmapi.post("",JSON.stringify(crmuploaddata));
-    if(res.data){
-        console.log('Crm updated successfully');
-    }
-}catch(error){
-  console.log(error);
-}*/
-
-let maildata = {subject:'Enquiry',text:message};
-let mailresponse = await sendMail(maildata);
-if(mailresponse){
-    console.log('Mail has been sent');
-}else{
-    console.log('Mail server error');  
-}
-Tagmanageri([{pagename:ipagename,custom_itinerary:false}],'itinerary_request');
-setBloading(false);
-setSubmitData({firstName:"",lastName:"",contact:"",email:"",message:''});
-}else{
-setSuccesspage('');
-setBloading(false);
-}
-setFinalsubmit(false);
-
-}
-
-
-return ( 
-	   <>
-       <div className={toggle ? "sidebar__area active" : "sidebar__area"}>
+  return (
+    <>
+      <div className={toggle ? "sidebar__area active" : "sidebar__area"}>
         <div className="sidebar__main__blk">
-            <div className="sidebar__title">
-                <h4>Enquiry</h4>
-                <h6 style={{fontSize:'1rem',cursor:'pointer',position: 'absolute',right:'10px',top:'20px'}} onClick={()=>{setToggle(false)}}>close</h6>
+          <div className="sidebar__title">
+            <h4>Enquiry</h4>
+            <h6 style={{ fontSize: '1rem', cursor: 'pointer', position: 'absolute', right: '10px', top: '20px' }} onClick={() => { setToggle(false) }}>close</h6>
+          </div>
+          <div className="sidebar__total__price mb-5">
+          </div>
+          {/* <form onSubmit={handleSumitForm}> */}
+          <form onSubmit={submitHandler}>
+
+            <div className="sidebar__form__wrap">
+              <span className="sidebar__lebel">Primary Traveller</span>
+              <div className="sidebar__form__single">
+                <label htmlFor="">First Name</label>
+                <input name="firstName" className={error && error.firstName ? "error" : "dff"} id="firstName" type="text" onChange={(e) => onChangeHandler(e)} value={submitData.firstName || ''} />
+              </div>
+              <div className="sidebar__form__single">
+                <label htmlFor="">Last Name</label>
+                <input className={error && error.lastName ? "error" : "dff"} type="text" name="lastName" id="lastName" onChange={(e) => onChangeHandler(e)} value={submitData.lastName || ''} />
+              </div>
+              <div className="sidebar__form__single">
+                <label htmlFor="">Contact</label>
+                <input type="text" className={error && error.contact ? "error" : "dff"} placeholder="+91" name="contact" id="contact" onChange={(e) => onChangeHandler(e)} value={submitData.contact || ''} />
+              </div>
+              <div className="sidebar__form__single">
+                <label htmlFor="">Email</label>
+                <input type="email" className={error && error.email ? "error" : "dff"} placeholder="your@domain.com" name="email" id="email" onChange={(e) => onChangeHandler(e)} value={submitData.email || ''} />
+              </div>
+              <div className="sidebar__form__single">
+                <label htmlFor="">Message</label>
+                <textarea style={{ width: '100%', border: "1px solid #C0C0C0", borderRadius: "5px", color: "#B4B4B4", fontSize: "16px", fontWeight: "400", padding: "10px" }} className={error && error.message ? "error" : "dff"} placeholder="Enter your Message" name="message" id="message" onChange={(e) => onChangeHandler(e)} value={submitData.message || ''} />
+              </div>
             </div>
-        <div className="sidebar__total__price mb-5"> 
-            </div>
-          <form onSubmit={handleSumitForm}>
-         
-                <div className="sidebar__form__wrap">
-                    <span className="sidebar__lebel">Primary Traveller</span>
-                    <div className="sidebar__form__single">
-                        <label htmlFor="">First Name</label>
-                        <input  name="firstName" className={error && error.firstName ? "error" : "dff"} id="firstName" type="text" onChange={(e)=>onChangeHandler(e)} value={submitData.firstName || ''}/>
-                    </div>
-                    <div className="sidebar__form__single">
-                        <label htmlFor="">Last Name</label>
-                        <input className={error && error.lastName ? "error" : "dff"} type="text" name="lastName" id="lastName" onChange={(e)=>onChangeHandler(e)} value={submitData.lastName || ''}/>
-                    </div>
-                    <div className="sidebar__form__single">
-                        <label htmlFor="">Contact</label>
-                        <input type="text" className={error && error.contact ? "error" : "dff"} placeholder="+91" name="contact" id="contact" onChange={(e)=>onChangeHandler(e)} value={submitData.contact || ''}/>
-                    </div>
-                    <div className="sidebar__form__single">
-                        <label htmlFor="">Email</label>
-                        <input type="email" className={error && error.email ? "error" : "dff"} placeholder="your@domain.com" name="email" id="email" onChange={(e)=>onChangeHandler(e)} value={submitData.email || ''}/>
-                    </div>
-                     <div className="sidebar__form__single">
-                        <label htmlFor="">Message</label>
-                        <textarea style={{width:'100%',border: "1px solid #C0C0C0",borderRadius: "5px",color: "#B4B4B4",fontSize: "16px",fontWeight: "400",padding: "10px"}} className={error && error.message ? "error" : "dff"} placeholder="Enter your Message" name="message" id="message" onChange={(e)=>onChangeHandler(e)} value={submitData.message || ''}/>
-                    </div>
-                </div>
-  
+
             <div className="sidebar__main__btn sidebar2">
-            <button style={{border:'none',width:'100%'}}  className="common__btn" disabled ={bloading ? true : false}>{bloading ? <span className="spinner-border" role="status"></span>:'Send'}</button>
+              <button style={{ border: 'none', width: '100%' }} className="common__btn" disabled={bloading ? true : false}>{bloading ? <span className="spinner-border" role="status"></span> : 'Send'}</button>
             </div>
-         </form>
+          </form>
         </div>
-    </div>
-    <div className="offcanvas-overlay"></div>
+      </div>
+      <div className="offcanvas-overlay"></div>
     </>
-	    )
+  )
 
 
 

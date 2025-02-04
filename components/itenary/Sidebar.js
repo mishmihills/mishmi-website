@@ -381,12 +381,12 @@ const Sidebar = (props) => {
               status: "success",
               isadvance: dataxz.isadvance,
               clientId: clientId,
-              tag: 'itenary'
+              tag: 'itinerary'
 
             }));
 
 
-            if (localresponse.data !== 400) {
+            if (localresponse.data.success) {
 
               let cregisterData = {
                 sale_date: todate(),
@@ -420,7 +420,10 @@ const Sidebar = (props) => {
               let uniqueid = localStorage.getItem('cartid');
               localStorage.removeItem(uniqueid);
               setSalert({ ...salert, success: "Payment transaction has been success", fail: "" });
-              Tagmanageri([{ pagename: ipagename, order_value: orderbooking.bookedItenary.grandtotal.gprice || 0 }], 'new_booking');
+              if(process.env.NEXT_PUBLIC_GOOGLETAGMANAGER && process.env.NEXT_PUBLIC_GOOGLETAGMANAGER !== ''){
+                Tagmanageri([{ pagename: ipagename, order_value: orderbooking.bookedItenary.grandtotal.gprice || 0 }], 'new_booking');
+              }
+             
 
 
             } else {
@@ -457,6 +460,16 @@ const Sidebar = (props) => {
     }
   }
 
+  const submitHandler = (e) => {
+    if (process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY && process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY !== '') {
+      handleSumitForm(e);
+    } else {
+      e.preventDefault();
+      gotoPayment(orderbooking);
+    }
+  
+  }
+
   return (
     <>
 
@@ -473,7 +486,8 @@ const Sidebar = (props) => {
               {!totalprice?.[6]?.coupondata && <><br/><small style={{fontSize:'0.7rem'}}>{`(Actual Subtotal: ${totalprice?.[8]?.subtotal ?? 0}/-, C.F. charges @2.5%: ${totalprice?.[8]?.cfcharge ?? 0}/- & GST @ 18 %: ${totalprice?.[8]?.tax ?? 0}`}/- ----- Total : {totalprice?.[3] ?? 0} /-</small></>}
             </h4>
           </div>
-          <form onSubmit={handleSumitForm}>
+          {/* <form onSubmit={handleSumitForm}> */}
+          <form onSubmit={submitHandler}>
             <div className="sidebar__time">
               {/*<h4>{locationdetails && locationdetails.length > 0 ? `${locationdetails[0]} , ${locationdetails[1]} and ${locationdetails.length - 2 > 0 ? locationdetails.length - 2 : ''} More` : ''}</h4>*/}
               <h4>{itineraryindex && itineraryindex.length > 0 ? itineraryindex[0].nameite : ""}</h4>

@@ -162,7 +162,7 @@ submitAll(submitData);
 return(()=>setFinalsubmit(false));
 
 },[finalsubmit])
-console.log(finalsubmit);
+
 const submitAll=async(submitData)=>{
 console.log(submitData);
 	let exc = {firstName:"",lastName:"",contact:"",email:"",message:''};
@@ -218,8 +218,9 @@ if(mailresponse){
 }else{
     console.log('Mail server error');  
 }
-
+if(process.env.NEXT_PUBLIC_GOOGLETAGMANAGER && process.env.NEXT_PUBLIC_GOOGLETAGMANAGER !== ''){
 Tagmanageri([{pagename:'event'}],'new_enquiry'); 
+}
 setBloading(false);
 setSubmitData({firstName:"",lastName:"",contact:"",email:"",message:''});
 }else{
@@ -232,6 +233,15 @@ setFinalsubmit(false);
     
 }
 
+const submitHandler = (e) => {
+  if (process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY && process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY !== '') {
+    handleSumitForm(e);
+  } else {
+    e.preventDefault();
+    submitAll(submitData);
+  }
+
+}
 
 return ( 
 	   <>
@@ -243,7 +253,7 @@ return (
             </div>
         <div className="sidebar__total__price mb-5"> 
             </div>
-          <form onSubmit={handleSumitForm}>
+          <form onSubmit={submitHandler}>
          
                 <div className="sidebar__form__wrap">
                     <span className="sidebar__lebel">Primary Guest</span>

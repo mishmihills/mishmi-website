@@ -3,10 +3,9 @@ const Razorpay = require("razorpay");
 const shortid = require("shortid");
 
 export default async function handler(req, res) {
- console.log(req.body)
+
   if (req.method === "POST") {
- const tokentocheck = req.body.token;
- adminapi.defaults.headers.common={'Authorization': 'Bearer ' + tokentocheck};
+
     // Initialize razorpay object
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY,
