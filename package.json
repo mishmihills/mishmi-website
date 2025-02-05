@@ -36,6 +36,7 @@
     "i": "^0.3.7",
     "jquery": "^3.6.1",
     "jwt-check-expiration": "^1.0.5",
+    "lines-and-columns": "^2.0.4",
     "lucide-react": "^0.474.0",
     "moment": "^2.29.4",
     "next": "12.3.1",
