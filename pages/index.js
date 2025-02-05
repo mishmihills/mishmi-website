@@ -13,7 +13,7 @@ import Sustainable from '../components/test/Sustainable';
 
 export default function Index({ itinerary, locations, events }) {
   return (
-    <div class="min-vh-100 bg-light text-dark font-sans">
+    <div className="min-vh-100 bg-light text-dark font-sans">
       {/* Header */}
       <Header/>
       {/* Hero Section */}

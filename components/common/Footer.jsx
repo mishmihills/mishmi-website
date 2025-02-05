@@ -25,19 +25,37 @@ const Footer = () => {
           </div>
           <div className="col-12 col-md-3">
             <h3 className="font-serif fs-4 mb-4">Follow Us</h3>
-            <div className="d-flex gap-3">
-              <a href="#" aria-label="Facebook" className="text-white">Facebook</a>
-              <a href="#" aria-label="Instagram" className="text-white">Instagram</a>
-              <a href="#" aria-label="Twitter" className="text-white">Twitter</a>
+            <div className="row g-3">
+              {process.env.NEXT_PUBLIC_FACEBOOK && (
+                <div className="col-4">
+                  <a href={process.env.NEXT_PUBLIC_FACEBOOK} aria-label="Facebook" className="text-white">Facebook</a>
+                </div>
+              )}
+              {process.env.NEXT_PUBLIC_INSTAGRAM && (
+                <div className="col-4">
+                  <a href={process.env.NEXT_PUBLIC_INSTAGRAM} aria-label="Instagram" className="text-white">Instagram</a>
+                </div>
+              )}
+              {process.env.NEXT_PUBLIC_TWITTER && (
+                <div className="col-4">
+                  <a href={process.env.NEXT_PUBLIC_TWITTER} aria-label="Twitter" className="text-white">Twitter</a>
+                </div>
+              )}
+              {process.env.NEXT_PUBLIC_YOUTUBE && (
+                <div className="col-4">
+                  <a href={process.env.NEXT_PUBLIC_YOUTUBE} aria-label="YouTube" className="text-white">YouTube</a>
+                </div>
+              )}
             </div>
+
           </div>
           <div className="col-12 col-md-3">
             <h3 className="font-serif fs-4 mb-4">Our Commitment</h3>
-            <p>Mishmi Hills is dedicated to sustainable tourism and preserving the natural beauty of our region.</p>
+            <p>{process.env.NEXT_PUBLIC_BRANDNAME} is dedicated to sustainable tourism and preserving the natural beauty of our region.</p>
           </div>
         </div>
-        <div className="mt-4 pt-4 border-top border-secondary text-center">
-          <p>&copy; 2024 Mishmi Hills. All rights reserved.</p>
+        <div className="mt-4 pt-4 border-top border-secondary text-center" style={{ fontSize: '0.8rem' }}>
+          <p>&copy; 2024 {process.env.NEXT_PUBLIC_COMPANYNAME}. All rights reserved.</p>
         </div>
       </div>
     </footer>
