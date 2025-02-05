@@ -20,7 +20,6 @@ const nextConfig = {
   },
   images: {
     domains: [
-      'encamp-media-files.s3.ap-south-1.amazonaws.com',
       'mishmihills.encmp.xyz',
       'encamp-saas-bucket.s3.ap-south-1.amazonaws.com',
       'mishmihills.com',
