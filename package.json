@@ -23,6 +23,7 @@
     "bootstrap": "^5.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "combined-stream": "^1.0.8",
     "dayjs": "^1.11.6",
     "dotenv": "^16.0.3",
     "emailjs": "^4.0.1",
