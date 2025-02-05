@@ -1,9 +1,9 @@
-import webpack from 'webpack';
-
 /** @type {import('next').NextConfig} */
+const webpack = require("webpack");
+
 const nextConfig = {
   crossOrigin: 'anonymous',
-  reactStrictMode: true,
+  reactStrictMode: true, // Merge strict mode settings
   swcMinify: true,
   distDir: 'build',
   webpack: (config, { webpack }) => {
@@ -26,10 +26,10 @@ const nextConfig = {
       'mishmihills.com',
       'localhost',
       'images.pexels.com',
-      'i.pravatar.cc',
-      'via.placeholder.com',
+      'i.pravatar.cc', // Add additional hostnames here
+      'via.placeholder.com'
     ],
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
