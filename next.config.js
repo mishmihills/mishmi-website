@@ -22,6 +22,7 @@ const nextConfig = {
     domains: [
       'mishmihills.encmp.xyz',
       'encamp-saas-bucket.s3.ap-south-1.amazonaws.com',
+      'encamp-media-files.s3.ap-south-1.amazonaws.com',
       'mishmihills.com',
       'localhost',
       'images.pexels.com',
