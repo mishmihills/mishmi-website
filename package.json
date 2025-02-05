@@ -17,6 +17,7 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@react-google-maps/api": "^2.16.1",
     "aos": "^2.3.4",
+    "asynckit": "^0.4.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
