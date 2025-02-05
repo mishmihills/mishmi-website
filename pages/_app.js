@@ -1,5 +1,6 @@
-import '../styles/responsive.css';
 import '../styles/default.css';
+import '../styles/style.css';
+import '../styles/responsive.css';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Loader from "../components/common/Loading";
@@ -7,39 +8,30 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true); // State to track CSS loading
+  const [isLoading, setIsLoading] = useState(true);
+  const reCaptchaKey = process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY;
 
   useEffect(() => {
     const handleLoad = () => {
-      setIsLoading(false); // Hide loader once CSS is loaded
+      setIsLoading(false);
     };
 
-    // Load CSS based on the route
+    // Dynamically load the CSS based on the route
     if (router.pathname !== '/') {
-      import('../styles/style.css').then(handleLoad);
-      
+     // import('../styles/style.css').then(handleLoad);
     } else {
       import('../styles/mismi.css').then(handleLoad);
     }
 
-    // Fallback: Hide loader if CSS doesn't load in time
+    // Fallback timeout to ensure the loader hides even if CSS doesn't load
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // Set timeout to 3 seconds
+    }, 3000);
 
     return () => clearTimeout(timeoutId);
   }, [router.pathname]);
 
-  return (
-  /*   <GoogleReCaptchaProvider
-      reCaptchaKey={process.env.NEXT_PUBLIC_INVISIBLE_RECAPTCHA_SITEKEY}
-      scriptProps={{
-        async: false,
-        defer: false,
-        appendTo: "head",
-        nonce: undefined,
-      }}
-    > */
+  const AppContent = (
     <>
       {isLoading ? (
         <Loader /> // Show loader while the CSS is loading
@@ -47,7 +39,22 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       )}
     </>
-   /*  </GoogleReCaptchaProvider> */
+  );
+
+  return reCaptchaKey ? (
+    <GoogleReCaptchaProvider
+      reCaptchaKey={reCaptchaKey}
+      scriptProps={{
+        async: false,
+        defer: false,
+        appendTo: "head",
+        nonce: undefined,
+      }}
+    >
+      {AppContent}
+    </GoogleReCaptchaProvider>
+  ) : (
+    AppContent
   );
 }
 

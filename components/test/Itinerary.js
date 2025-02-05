@@ -88,17 +88,17 @@ const Itinerary = ({ itineraryList }) => {
                   </Badge>
                 </div>
                 <div className="card-body">
-                  <h5 className="card-title text-success">{trek?.itineraryindex?.[0]?.commondetails?.trip?.nameite ?? ""}</h5>
-                  <p className="card-text py-3">{trek?.itineraryindex?.[0]?.commondetails?.trip?.tripdetails ?? ""}</p>
+                  <h5 className="h5 d-flex align-items-center justify-content-between">{trek?.itineraryindex?.[0]?.commondetails?.trip?.nameite ?? ""}</h5>
+                  <p className="text-muted">{trek?.itineraryindex?.[0]?.commondetails?.trip?.tripdetails ?? ""}</p>
                 </div>
                 <div className="card-footer">
                   <ul className="row list-unstyled small">
                     <li className="d-flex align-items-center mb-3 col-6">
-                      <Clock className="w-4 h-4 me-2 text-success" />
+                      <Clock className="w-4 h-4 me-2 text-muted" />
                       <span>{getItenaryduration(trek)}</span>
                     </li>
                     <li className="d-flex align-items-center mb-3 col-6">
-                      <Users className="w-4 h-4 me-2 text-success" />
+                      <Users className="w-4 h-4 me-2 text-muted" />
                       <span>
                         {trek?.itineraryindex?.[0]?.commondetails?.typeoftrip === 'group'
                           ? 1
@@ -106,7 +106,7 @@ const Itinerary = ({ itineraryList }) => {
                       </span>
                     </li>
                     <li className="d-flex align-items-center mb-3 col-6">
-                      <Banknote className="w-4 h-4 me-2 text-success" />
+                      <Banknote className="w-4 h-4 me-2 text-muted" />
                       <span>₹ {getPriceString(trek)} /-</span>
                     </li>
                   </ul>

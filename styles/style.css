@@ -2860,7 +2860,7 @@ html {
 /*-------------------- Experience area css start --------------------*/
 
 .experience__area {
-  padding-top: 160px;
+  padding-top: 85px;
   padding-bottom: 90px;
   position: relative;
   z-index: 1;
@@ -2874,7 +2874,7 @@ html {
   height: 35%;
   content: "";
   z-index: -1;
-  background: linear-gradient(180deg, #e8fff8 0%, rgba(255, 255, 255, 0) 100%);
+  /* background: linear-gradient(180deg, #e8fff8 0%, rgba(255, 255, 255, 0) 100%); */
 }
 
 .experience__title {

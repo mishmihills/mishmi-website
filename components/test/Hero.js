@@ -29,7 +29,7 @@ const Hero = () => {
       <p className="lead mb-4" style={{ opacity: 1 }}>
         Explore sustainable travel through treks, local stays, and cultural activities.
       </p>
-      <div className="d-flex justify-content-center gap-3">
+      <div className="d-flex justify-content-center gap-3 px-2">
         <Button
           className="btn"
           style={{ backgroundColor: '#D88C5C', color: 'white', opacity: 1 }}

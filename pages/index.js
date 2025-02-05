@@ -11,7 +11,7 @@ import Sustainable from '../components/test/Sustainable';
 
 
 
-export default function Testpage({ itinerary, locations, events }) {
+export default function Index({ itinerary, locations, events }) {
   return (
     <div class="min-vh-100 bg-light text-dark font-sans">
       {/* Header */}

@@ -55,7 +55,6 @@ getAccomodationData();
 const show = (e, id) => {
   if (!isenquried && id > 1) {
     setShowModal(true);
-    alert("Open Enquiry Form");
     return;
   }
 
@@ -103,7 +102,7 @@ const handleIntersection = (entries) => {
         return;
       }
       
-      if(!isenquried && dayNumber === 1){
+      if(!isenquried && dayNumber > 1){
         setShowModal(true);
         return;
       }

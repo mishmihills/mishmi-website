@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <header className="sticky-top bg-light shadow">
-      <div className="container-fluid py-3 d-flex align-items-center justify-content-between px-4">
+      <div className="container-fluid py-3 d-flex align-items-center justify-content-between">
         <Link href="/" legacyBehavior>
           <a className="d-flex align-items-center text-decoration-none">
             <span className="h4 text-success fw-bold">{process.env.NEXT_PUBLIC_BRANDNAME}</span>
