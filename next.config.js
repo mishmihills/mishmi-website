@@ -5,7 +5,6 @@ const nextConfig = {
   crossOrigin: 'anonymous',
   reactStrictMode: true, // Merge strict mode settings
   swcMinify: true,
-  distDir: 'build',
   webpack: (config, { webpack }) => {
     config.plugins.push(
       new webpack.ProvidePlugin({
