@@ -29,13 +29,6 @@ const nextConfig = {
       'i.pravatar.cc', // Add additional hostnames here
       'via.placeholder.com'
     ],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'mishmihills.com',
-        pathname: '/',
-      },
-    ],
   },
 };
 
