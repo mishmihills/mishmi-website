@@ -1,0 +1,33 @@
+services:
+  mishmi-website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mishmi-website
+    restart: unless-stopped
+    networks:
+      - encamp-saas-network
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    labels:
+      - "traefik.enable=true"
+
+      # HTTP to HTTPS Redirect
+      - "traefik.http.routers.mishmi-website-http.entrypoints=http"
+      - "traefik.http.routers.mishmi-website-http.rule=Host(`mishmihills.com`)"
+      - "traefik.http.routers.mishmi-website-http.middlewares=redirect-to-https"
+
+      # HTTPS Configuration
+      - "traefik.http.routers.mishmi-website.entrypoints=https"
+      - "traefik.http.routers.mishmi-website.rule=Host(`mishmihills.com`)"
+      - "traefik.http.routers.mishmi-website.tls=true"
+      - "traefik.http.routers.mishmi-website.tls.certresolver=cloudflare"
+
+      # Load Balancer for Next.js App
+      - "traefik.http.services.mishmi-website.loadbalancer.server.port=3000"
+
+networks:
+  encamp-saas-network:
+    external: true
